@@ -1,5 +1,6 @@
 import random
 from multiprocessing.managers import Value
+from typing import final
 
 letter_grade_to_gpa_dictionary = { 'A+': 4.0 , 'A': 4.0 , 'A-': 3.7,
                                    'B+': 3.3 , 'B': 3.0 , 'B-': 2.7,
@@ -133,10 +134,41 @@ def student_record():
     my_student.print_transcript()
 
 def lottery_number_generator ():
-    return
+    lucky_number = []
+
+    while len(lucky_number) < 5:
+        number = random.randint(1,69)
+        if number not in lucky_number:
+            lucky_number.append(number)
+
+    power_number = random.randint(1,26)
+
+    lucky_number.sort()
+
+    result = lucky_number + [power_number]
+
+    lucky_number_string = str(lucky_number).replace("[", "").replace("]", "").replace("'", "").replace(",", "")
+
+    result_string = str(result).replace("[", "").replace("]", "").replace("'", "").replace(",", "")
+
+    print(f"Your Lucky Numbers are {lucky_number_string}. Your Power Number is {power_number}.")
+    print(f"Here is the result: {result_string}")
 
 def pig_latin():
-    return
+
+    sentence_input = input("Enter sentence to be converted into Pig Latin:")
+    sentence_input_list = sentence_input.split()
+
+    pig_latin_list = []
+
+    for word in sentence_input_list:
+        combined_word = word[1:] + word[0] + "ay"
+        pig_latin_list.append(combined_word)
+
+    pig_latin = (str(pig_latin_list).replace("[", "").replace("]", "")
+                 .replace("'", "").replace(",", ""))
+    print(pig_latin)
+    print()
 
 def rock_paper_scissors():
     return
@@ -144,12 +176,16 @@ def rock_paper_scissors():
 def main():
     menu = ("Welcome to the CSC115 final project.\n"
                  "Enter 1 to Student Record \n"
-                 "Enter 2 for Lotter Number Generator \n"
+                 "Enter 2 for Lottery Number Generator \n"
                  "Enter 3 for Pig Latin \n"
                  "Enter 4 for Rock, Paper, Scissors \n")
 
     print(menu)
+
+    valid_choice_list = ['1','2','3','4','9']
     input_choice = input("Enter menu option 1,2,3,4, or 9 to exit: ")
+    while (input_choice not in valid_choice_list):
+        input_choice = input("Invalid Input. Enter menu option 1,2,3,4, or 9 to exit: ")
 
     while (input_choice != "9"):
         #If option 1, display student record
@@ -162,16 +198,12 @@ def main():
         elif (input_choice == "3"):
             pig_latin()
         #If option 4, execute rock paper scissors game
-        elif (input_choice == "4"):
-            rock_paper_scissors()
-        #If an invalid option is entered, re-enter input.
         else:
-            print(f"User select option: {input_choice} which is an INVALID option. Please re-enter:")
-
-        #Display the menu again and ask for new input.
-        print("-" * 50)
+            rock_paper_scissors()
         print(menu)
-        input_choice = input("Enter your choice: ")
+        input_choice = input("Enter menu option 1,2,3,4, or 9 to exit: ")
+        while (input_choice not in valid_choice_list):
+            input_choice = input("Invalid Input. Enter menu option 1,2,3,4, or 9 to exit: ")
 
     #Exit program once option 9 is elected.
     print("User selection option 9: which is an Exit Program."
@@ -180,6 +212,10 @@ def main():
       "\nGoodbye.")
     print("*" * 50)
 
+
+
+if __name__ == '__main__':
+    main()
 
 
 if __name__ == '__main__':
